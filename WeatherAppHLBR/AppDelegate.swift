@@ -8,17 +8,8 @@
 
 import UIKit
 import CoreData
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        return true
-    }
-
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
@@ -61,9 +52,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         return container
     }()
+    lazy var applicationDocumentsDirectory: URL = {
+        // The directory the application uses to store the Core Data store file. This code uses a directory named "com.TimerReminder" in the application's documents Application Support directory.
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return urls[urls.count-1]
+    }()
 
+    lazy var managedObjectModel: NSManagedObjectModel = {
+        // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
+        let file = "WeatherAppHLBR.momd"
+        let modelURL = Bundle.main.url(forResource: file, withExtension: nil)!
+        return NSManagedObjectModel(contentsOf: modelURL)!
+    }()
+
+
+    lazy var managedObjectContext: NSManagedObjectContext = {
+        // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
+        let psc = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+
+        let coordinator = psc
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = coordinator
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let docURL = urls[urls.endIndex-1]
+        /* The directory the application uses to store the Core Data store file.
+        This code uses a file named "DataModel.sqlite" in the application's documents directory.
+        */
+        let storeURL = docURL.appendingPathComponent("NodelOk.sqlite")
+        do {
+            try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
+        } catch {
+            fatalError("Error migrating store: \(error)")
+        }
+        return managedObjectContext
+    }()
     // MARK: - Core Data Saving support
-
+    
     func saveContext () {
         let context = persistentContainer.viewContext
         if context.hasChanges {

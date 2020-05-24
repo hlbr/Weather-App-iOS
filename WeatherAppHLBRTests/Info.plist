@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Obteniendo el clima</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>El clima de tu ubicación</string>
+	<key>LSApplicationCategoryType</key>
+	<string>Clima</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
