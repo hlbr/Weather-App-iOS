@@ -4,9 +4,10 @@
         <attribute name="cityId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="cityName" optional="YES" attributeType="String"/>
         <attribute name="current" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="customId" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="isDismissable" optional="YES" attributeType="Integer 64" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="Cities" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="Cities" positionX="-63" positionY="-18" width="128" height="118"/>
     </elements>
 </model>

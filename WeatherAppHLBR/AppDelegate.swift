@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         /* The directory the application uses to store the Core Data store file.
         This code uses a file named "DataModel.sqlite" in the application's documents directory.
         */
-        let storeURL = docURL.appendingPathComponent("NodelOk.sqlite")
+        let storeURL = docURL.appendingPathComponent("LocalSQL.sqlite")
         do {
             try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
         } catch {
@@ -90,6 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func saveContext () {
         let context = persistentContainer.viewContext
+        print(context.hasChanges)
         if context.hasChanges {
             do {
                 try context.save()

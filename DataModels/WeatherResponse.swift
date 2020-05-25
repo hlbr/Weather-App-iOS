@@ -17,8 +17,8 @@ struct WeatherResponse {
     let isDismissible: Bool
     let cityId: NSNumber
     let resume: String
-    var id: ObjectIdentifier?
-    init(json: NSDictionary, canDismiss: Bool, id: ObjectIdentifier?) {
+    var id: NSManagedObjectID?
+    init(json: NSDictionary, canDismiss: Bool, id: NSManagedObjectID?) {
         guard let main: NSDictionary = json["main"] as? NSDictionary else {
             self.current = NSNumber(integerLiteral: 0)
             self.maxTemp = NSNumber(integerLiteral: 0)
@@ -52,6 +52,7 @@ struct WeatherResponse {
         entity.setValue(Int64(truncating: self.current), forKey: "current")
         entity.setValue(Float(truncating: self.cityId), forKey: "cityId")
         entity.setValue(self.cityName, forKey: "cityName")
+        entity.setValue(NSTimeIntervalSince1970, forKey: "customId")
         if self.isDismissible {
             entity.setValue(1.0, forKey: "isDismissable")
         }   else {

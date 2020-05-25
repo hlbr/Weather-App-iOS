@@ -8,9 +8,10 @@
 
 import CoreLocation
 import Foundation
+import CoreData
 
 protocol WeatherRequestDelegate {
-    func onResult(data: NSDictionary, canDismiss: Bool, isNew: Bool, id: ObjectIdentifier?)
+    func onResult(data: NSDictionary, canDismiss: Bool, isNew: Bool, id: NSManagedObjectID?, index: Int?)
     func onError(msg: String)
 }
 
@@ -25,23 +26,26 @@ class WeatherRequest {
     var request: URLSessionDataTask!
     let canDismiss: Bool
     let storeValue: Bool
-    let objectId: ObjectIdentifier?
-    init?(coordinates: CLLocationCoordinate2D?, isNew: Bool, id: ObjectIdentifier?) {
+    let objectId: NSManagedObjectID?
+    let i: Int?
+    init?(coordinates: CLLocationCoordinate2D?,isDismissible: Bool, isNew: Bool, id: NSManagedObjectID?, index: Int?) {
         locationC = coordinates
-        canDismiss = false
+        canDismiss = isDismissible
         storeValue = isNew
         objectId = id
+        i = index
         stringURL = getURL(lat: Int(locationC!.latitude), lon: Int(locationC!.longitude), apiKey: apiKey)
     }
-    init?(cityID: NSNumber, isNew: Bool, id: ObjectIdentifier?) {
+    init?(cityID: NSNumber, isNew: Bool, id: NSManagedObjectID?, index: Int?) {
         canDismiss = true
         storeValue = isNew
         objectId = id
+        i = index
         stringURL = getURL(cityId: cityID)
     }
        
    private func getURL(cityId: NSNumber) -> String {
-       return "https://api.openweathermap.org/data/2.5/weather?id=\(cityId)&appid=\(apiKey)"
+       return "https://api.openweathermap.org/data/2.5/weather?id=\(cityId)&appid=\(apiKey)&units=metric"
    }
     
     private func getURL(lat: Int, lon: Int, apiKey: String) -> String {
@@ -56,7 +60,7 @@ class WeatherRequest {
             }
             do {
                 let jsonObj = try JSONSerialization.jsonObject(with: data, options: [])
-                self.RequestAnswerDelegate.onResult(data: jsonObj as! NSDictionary, canDismiss: self.canDismiss, isNew: self.storeValue, id: self.objectId)
+                self.RequestAnswerDelegate.onResult(data: jsonObj as! NSDictionary, canDismiss: self.canDismiss, isNew: self.storeValue, id: self.objectId, index: self.i)
             } catch {
                 self.RequestAnswerDelegate.onError(msg: "Error al serializar JSON")
             }

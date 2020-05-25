@@ -13,12 +13,13 @@ public class Cities: NSManagedObject, Identifiable {
     @NSManaged public var cityName: String?
     @NSManaged public var current: NSNumber?
     @NSManaged public var isDismissable: NSNumber?
+    @NSManaged public var customId: NSNumber?
 }
 
 extension Cities {
     static func getAllCities() -> NSFetchRequest<Cities> {
         let request =  NSFetchRequest<Cities>(entityName: "Cities")
-        let sortDescriptor = NSSortDescriptor(key: "cityId", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "isDismissable", ascending: true)
         request.sortDescriptors = [sortDescriptor]
         request.returnsObjectsAsFaults = false
         return request
