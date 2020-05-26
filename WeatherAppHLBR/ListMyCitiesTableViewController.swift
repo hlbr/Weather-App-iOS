@@ -58,7 +58,7 @@ class ListMyCitiesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CitiesCell", for: indexPath) as! CitiesCell
         cell.cityName.text = GlobalData.CitiesWeather[indexPath.row]!.cityName
-        cell.current.text = "\(GlobalData.CitiesWeather[indexPath.row]!.current) ºC"
+        cell.current.text = "\(Int(truncating:GlobalData.CitiesWeather[indexPath.row]!.current)) ºC"
         cell.resume.text = GlobalData.CitiesWeather[indexPath.row]!.resume
         return cell
     }

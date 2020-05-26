@@ -66,18 +66,16 @@ class HomeScreen: UIViewController, CLLocationManagerDelegate, WeatherRequestDel
     private let locationManager = CLLocationManager()
     override func viewDidLoad() {
         super.viewDidLoad()
-        RequestAuthorization()
         NotificationCenter.default.addObserver(self, selector: #selector(self.deleteObject(_:)), name: notificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateTalble(_:)), name: Notification.Name(UpdateNotificationKey), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.passed(_:)), name: Notification.Name(selectNotificationKey), object: nil)
         collectionView.delegate = self
         collectionView.dataSource = self
-        dataDelegate = ListMyCitiesTableViewController()
         collectionView?.register(UINib(nibName: "CityWeatherReportCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CityWeatherReportCollectionViewCell")
-
+        RequestAuthorization()
     }
     override func viewDidAppear(_ animated: Bool) {
-        // Request access to current location
+        warningLabel.isHidden = false
     }
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -92,21 +90,25 @@ class HomeScreen: UIViewController, CLLocationManagerDelegate, WeatherRequestDel
             try? context.save()
         }
     }
+    @IBOutlet weak var warningLabel: UILabel!
     @objc private func updateTalble(_ notification: Notification) {
         self.collectionView.reloadData()
     }
     private func RequestAuthorization() {
-        print("Request Authorizarion")
-        self.locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-        } else {
-            // Warn this app requires location
+              locationManager.delegate = self
+              locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+              locationManager.startUpdatingLocation()
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined, .authorizedAlways, .authorizedWhenInUse:
+                break
+            case .restricted, .denied:
+                warningLabel.isHidden = false
             
-            //Request access to current location again
-            RequestAuthorization()
+            @unknown default:
+                break
+            }
         }
 
     }
@@ -114,13 +116,12 @@ class HomeScreen: UIViewController, CLLocationManagerDelegate, WeatherRequestDel
     private var length = Int()
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager.stopUpdatingLocation()
+        warningLabel.isHidden = true
+        collectionView.isHidden = false
         guard let coordinates: CLLocationCoordinate2D = manager.location?.coordinate else {
             // Warn user something went wrong
             return
         }
-//        var deleteRequet = NSBatchDeleteRequest(fetchRequest: NSFetchRequest(entityName: "Cities"))
-//        try? AppDelegate().managedObjectContext.execute(deleteRequet)
-//                try? AppDelegate().managedObjectContext.save()
         let fectchRequest = Cities.getAllCities()
         fecthedCities = try? AppDelegate().managedObjectContext.fetch(fectchRequest)
 
@@ -168,7 +169,9 @@ class HomeScreen: UIViewController, CLLocationManagerDelegate, WeatherRequestDel
     }
     
     func onError(msg: String) {
-        print(msg)
+        let alert = UIAlertController(title: "Parece que algo no está bien", message: msg, preferredStyle: .alert)
+               alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: nil ))
+        present(alert, animated: true, completion: nil)
     }
 }
 

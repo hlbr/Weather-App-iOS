@@ -60,7 +60,6 @@ class WeatherRequest {
             }
             do {
                 let jsonObj = try JSONSerialization.jsonObject(with: data, options: [])
-                print(jsonObj)
                 self.RequestAnswerDelegate.onResult(data: jsonObj as! NSDictionary, canDismiss: self.canDismiss, isNew: self.storeValue, id: self.objectId, index: self.i)
             } catch {
                 self.RequestAnswerDelegate.onError(msg: "Error al serializar JSON")

@@ -22,7 +22,9 @@ class FindAndAddCityViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func onError(msg: String) {
-        print(msg)
+        let alert = UIAlertController(title: "Parece que algo no está bien", message: msg, preferredStyle: .alert)
+               alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: nil ))
+        present(alert, animated: true, completion: nil)
     }
     @IBOutlet weak var table: UITableView!
     
