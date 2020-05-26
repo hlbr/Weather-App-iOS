@@ -121,8 +121,19 @@ extension HomeScreen: WeatherRequestDelegate {
     }
 }
 
-// Notification management
+// Notification management and segue management
 extension HomeScreen {
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let id = segue.destination.restorationIdentifier {
+            if id == "History" {
+                let nextView = segue.destination as! HistoryOfCityWeatherTableViewController
+                nextView.latitude = GlobalData.CitiesWeather[pagination.currentPage]?.lat
+                nextView.longitude = GlobalData.CitiesWeather[pagination.currentPage]?.lng
+            }
+        }
+    }
+    
     @objc func passed(_ notification: Notification) {
         if let data = notification.userInfo as? [String: Int] {
             DispatchQueue.main.async {

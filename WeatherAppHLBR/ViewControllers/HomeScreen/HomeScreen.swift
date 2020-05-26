@@ -24,7 +24,7 @@ class HomeScreen: UIViewController {
     var fecthedCities: [AnyObject]?
     var length = Int()
     
-    // View trigered methods
+    // View triggered methods
     override func viewDidLoad() {
        super.viewDidLoad()
        NotificationCenter.default.addObserver(self, selector: #selector(self.deleteObject(_:)), name: notificationName, object: nil)
@@ -37,7 +37,11 @@ class HomeScreen: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-       warningLabel.isHidden = true
+       warningLabel.isHidden = false
+    }
+
+    override func didReceiveMemoryWarning() {
+      super.didReceiveMemoryWarning()
     }
     
     deinit {

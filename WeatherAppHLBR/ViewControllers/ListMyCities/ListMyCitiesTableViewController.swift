@@ -19,6 +19,10 @@ class ListMyCitiesTableViewController: UITableViewController {
 
     }
     
+    override func didReceiveMemoryWarning() {
+         super.didReceiveMemoryWarning()
+    }
+    
     // Notification management
     @objc private func updateTable(_ notification: Notification){
         tableView.reloadData()

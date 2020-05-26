@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CoreLocation
 
 struct WeatherResponse {
     private let maxTemp: NSNumber
@@ -18,6 +19,8 @@ struct WeatherResponse {
     let cityId: NSNumber
     let resume: String
     var id: NSManagedObjectID?
+    var lat: NSNumber
+    var lng: NSNumber
     init(json: NSDictionary, canDismiss: Bool, id: NSManagedObjectID?) {
         guard let main: NSDictionary = json["main"] as? NSDictionary else {
             self.current = NSNumber(integerLiteral: 0)
@@ -28,6 +31,8 @@ struct WeatherResponse {
             self.isDismissible = true
             self.resume = ""
             self.id = id
+            self.lat = NSNumber(integerLiteral: 0)
+            self.lng = NSNumber(integerLiteral: 0)
             return
         }
         self.current = main["temp"] as! NSNumber
@@ -40,6 +45,10 @@ struct WeatherResponse {
         let descriptionObject = weather[0] as! NSDictionary
         self.id = id
         self.resume = descriptionObject["description"] as! String
+        let coord = json["coord"] as! [String: NSNumber]
+        self.lat = coord["lat"]!
+        self.lng = coord["lon"]!
+        
     }
     
     func range () -> String {

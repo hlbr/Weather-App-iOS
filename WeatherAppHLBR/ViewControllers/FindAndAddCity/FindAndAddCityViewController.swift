@@ -39,5 +39,9 @@ class FindAndAddCityViewController: UIViewController {
         table.separatorStyle = .none
         table.backgroundColor = .black
     }
+    
+    override func didReceiveMemoryWarning() {
+         super.didReceiveMemoryWarning()
+    }
 }
 

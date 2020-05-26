@@ -18,3 +18,8 @@ protocol CityRequestDelegate {
     func onResult(options: JSON)
     func onError(msg: String)
 }
+
+protocol CityHistoryRequestDelegate {
+    func onResult(history: [CityHistoryHourlyResume])
+    func onError(msg: String)
+}
