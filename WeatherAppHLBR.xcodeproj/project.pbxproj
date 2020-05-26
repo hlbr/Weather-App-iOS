@@ -144,7 +144,6 @@
 		E95F192D3C0762D6E5F107AB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EC7CDD75247D6D53006658FB /* Podfile */,
 				CC8AA39A8B91A1E7830FC76E /* Pods-WeatherAppHLBR.debug.xcconfig */,
 				D2A777228ECA31FE2CDD74FA /* Pods-WeatherAppHLBR.release.xcconfig */,
 			);
@@ -265,6 +264,7 @@
 				EC83A34724789B81004036BC /* Main.storyboard */,
 				EC83A34D24789B82004036BC /* Assets.xcassets */,
 				EC83A34F24789B82004036BC /* LaunchScreen.storyboard */,
+				EC7CDD75247D6D53006658FB /* Podfile */,
 				EC83A35224789B82004036BC /* Info.plist */,
 			);
 			path = WeatherAppHLBR;
