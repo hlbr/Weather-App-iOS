@@ -7,14 +7,7 @@
 //
 
 import CoreLocation
-import Foundation
 import CoreData
-
-protocol WeatherRequestDelegate {
-    func onResult(data: NSDictionary, canDismiss: Bool, isNew: Bool, id: NSManagedObjectID?, index: Int?)
-    func onError(msg: String)
-}
-
 
 
 class WeatherRequest {

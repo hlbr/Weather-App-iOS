@@ -1,5 +1,5 @@
 //
-//  CityWeather.swift
+//  Cities.swift
 //  WeatherAppHLBR
 //
 //  Created by Héctor Luis on 23/05/20.
@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+
 public class Cities: NSManagedObject, Identifiable {
     @NSManaged public var cityId: NSNumber?
     @NSManaged public var cityName: String?

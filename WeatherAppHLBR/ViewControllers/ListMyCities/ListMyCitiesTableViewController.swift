@@ -11,19 +11,24 @@ import CoreData
 
 
 class ListMyCitiesTableViewController: UITableViewController {
+    // View trigered methods
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "CitiesCell", bundle: nil), forCellReuseIdentifier: "CitiesCell")
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTable(_:)), name: notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTable(_:)), name: Notification.Name(UpdateNotificationKey), object: nil)
 
     }
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    private let notificationName = Notification.Name(UpdateNotificationKey)
+    
+    // Notification management
     @objc private func updateTable(_ notification: Notification){
         tableView.reloadData()
      }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    // Table View Controller Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let index = indexPath.row
         NotificationCenter.default.post(name: Notification.Name(rawValue: selectNotificationKey),object: nil, userInfo: ["index": index])
@@ -36,6 +41,7 @@ class ListMyCitiesTableViewController: UITableViewController {
         }
         return true
     }
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             let name = Notification.Name(rawValue: deleteNotificationKey)
@@ -46,26 +52,25 @@ class ListMyCitiesTableViewController: UITableViewController {
             tableView.reloadData()
         }
     }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return GlobalData.CitiesWeather.count
     }
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80.0
     }
+    
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 50.0
     }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CitiesCell", for: indexPath) as! CitiesCell
         cell.cityName.text = GlobalData.CitiesWeather[indexPath.row]!.cityName
         cell.current.text = "\(Int(truncating:GlobalData.CitiesWeather[indexPath.row]!.current)) ºC"
         cell.resume.text = GlobalData.CitiesWeather[indexPath.row]!.resume
         return cell
-    }
-    @objc func lookForCity () {
-        let vc = storyboard?.instantiateViewController(identifier: "FindCity")
-        vc?.modalPresentationStyle = .pageSheet
-        present(vc!, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -77,7 +82,12 @@ class ListMyCitiesTableViewController: UITableViewController {
         footerView.addSubview(button)
         return footerView
     }
-
+    
+    @objc func lookForCity () {
+        let vc = storyboard?.instantiateViewController(identifier: "FindCity")
+        vc?.modalPresentationStyle = .pageSheet
+        present(vc!, animated: true, completion: nil)
+    }
     
 }
 

@@ -8,10 +8,6 @@
 
 import UIKit
 import SwiftyJSON
-protocol CityRequestDelegate {
-    func onResult(options: JSON)
-    func onError(msg: String)
-}
 
 class CityQueryRequest {
     let Query: String?
