@@ -26,3 +26,28 @@ Sin acceso a la ubicación, la pantalla principal sólo mostrará la advertencia
 
 <img src="https://scontent.fpbc1-1.fna.fbcdn.net/v/t1.15752-9/100670917_636867366901185_2802950998023208960_n.jpg?_nc_cat=102&_nc_sid=b96e70&_nc_eui2=AeFAOhCEiLussUAAkjDXCZGTE21O4xaqsPUTbU7jFqqw9Rueg5Jj3hwgbFGXa4x1eqw&_nc_oc=AQkJRBWZBFrGi4Oj0_eXyyTOP26IgV4_Mq2xy8C_I3R0d9IXt4_3aHi6Z6E8DKUYWXQmr0cnaqTg6sCsZXe4cRKO&_nc_ht=scontent.fpbc1-1.fna&oh=e42e86129e2d898a753b1827681f10e4&oe=5EF45DA1" width="250"/>
 
+##### 3.- Clima en la ciudad actual
+Si el usuario permite el acceso a los servicios de ubicación, la pantalla principal mostrará el clima en la ubicación actual por defecto. Deslizar horizontalmente permite ver las otras ciudades guardadas.
+
+<img src="https://scontent.fpbc1-1.fna.fbcdn.net/v/t1.15752-9/99423990_246072773153129_2376410039146512384_n.jpg?_nc_cat=110&_nc_sid=b96e70&_nc_eui2=AeG1uXOFc04SXPL9qOU1MPdK-c6Z6VQ1E3z5zpnpVDUTfIxrN26w4S1tDaHyXs8zDAY&_nc_oc=AQlRis32j3uN5Lyc9MxK0biZ-IEMX4Hc-mqGwYYFJ-lDjJVJw1_C0clmf-ZRN77TFGD_3NWNLT-2uJuR-Q5m6G4q&_nc_ht=scontent.fpbc1-1.fna&oh=eb74c91aa3473fdbf02329dc331b4395&oe=5EF32347" width="250"/>
+
+##### 4.- Barra de herramientas
+En el inferior de la pantalla principal se encuentra la barra de herramientas.
+
+<img src="https://scontent.fpbc1-1.fna.fbcdn.net/v/t1.15752-9/99073837_249537693022585_4380739193060458496_n.png?_nc_cat=105&_nc_sid=b96e70&_nc_eui2=AeHj44sWyavYW_iJgXMjq-ncx0ARAFfIFivHQBEAV8gWK_1GX7Xz-3rXbrgLW_oQzA4&_nc_oc=AQkW-uhyfhLDUrZ6z3wIEWCCWjyDUTYRFapOp1naCaVJaC90C2gRsvo9Xmto85L2q_UDaSn4phHf3ujczEnhKnjX&_nc_ht=scontent.fpbc1-1.fna&oh=fc0402e4f874bfe88c95396fb9c6316f&oe=5EF2DC9A" width="250"/>
+
+```
+1.- Botón de historial.
+
+  Lleva a la pantalla que contiene el reporte del clima de los cinco días anteriores a la fecha actual. 
+  Muestra los datos de la ciudad centrada en la pantalla principal.
+  
+2.- Indicador de navegación. 
+
+  Muestra la posición del usuario conforme a todas las ciudades guardadas.
+  
+3.- Lista de ciudades guardadas. 
+
+  Minimiza la visualización de todas las ciudades guardadas. 
+  Permite cambiar más rápido entre ciudades.
+```
