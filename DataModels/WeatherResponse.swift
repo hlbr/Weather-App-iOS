@@ -43,10 +43,10 @@ struct WeatherResponse {
     }
     
     func range () -> String {
-        return "\(Int(truncating: self.maxTemp))ºC - \(Int(truncating: self.minTemp))ºC"
+        return "Hoy \(Int(truncating: self.maxTemp))/\(Int(truncating: self.minTemp)) ºC"
     }
     
-    func saveData() throws{
+    func saveData() throws -> NSManagedObjectID {
         let context = AppDelegate().managedObjectContext
         let entity = NSEntityDescription.insertNewObject(forEntityName: "Cities", into: context)
         entity.setValue(Int64(truncating: self.current), forKey: "current")
@@ -59,5 +59,6 @@ struct WeatherResponse {
             entity.setValue(0.0, forKey: "isDismissable")
         }
         try? context.save()
+        return entity.objectID
     }
 }

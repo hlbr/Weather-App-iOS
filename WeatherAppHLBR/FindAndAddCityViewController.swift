@@ -33,6 +33,8 @@ class FindAndAddCityViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLoad()
         table.dataSource = self
         table.delegate = self
+        table.separatorStyle = .none
+        table.backgroundColor = .black
     }
 
 
@@ -65,7 +67,7 @@ class FindAndAddCityViewController: UIViewController, UITableViewDelegate, UITab
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.backgroundColor = .clear
+        cell.backgroundColor = .black
         cell.textLabel?.text = placeString(from: citySuggestions[indexPath.row])
         cell.textLabel?.textColor = .white
         return cell
@@ -81,7 +83,8 @@ class FindAndAddCityViewController: UIViewController, UITableViewDelegate, UITab
     func onResult(data: NSDictionary, canDismiss: Bool, isNew: Bool, id: NSManagedObjectID?, index: Int?) {
         var resposeObject = WeatherResponse(json: data, canDismiss: canDismiss, id: nil)
         if isNew {
-            try? resposeObject.saveData()
+            let id = try? resposeObject.saveData()
+            resposeObject.id = id
             GlobalData.CitiesWeather.append(resposeObject)
             DispatchQueue.main.sync {
                 NotificationCenter.default.post(name: Notification.Name(UpdateNotificationKey), object: nil)

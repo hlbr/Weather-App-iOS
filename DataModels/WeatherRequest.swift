@@ -34,7 +34,7 @@ class WeatherRequest {
         storeValue = isNew
         objectId = id
         i = index
-        stringURL = getURL(lat: Int(locationC!.latitude), lon: Int(locationC!.longitude), apiKey: apiKey)
+        stringURL = getURL(lat: locationC!.latitude, lon: locationC!.longitude, apiKey: apiKey)
     }
     init?(cityID: NSNumber, isNew: Bool, id: NSManagedObjectID?, index: Int?) {
         canDismiss = true
@@ -45,11 +45,11 @@ class WeatherRequest {
     }
        
    private func getURL(cityId: NSNumber) -> String {
-       return "https://api.openweathermap.org/data/2.5/weather?id=\(cityId)&appid=\(apiKey)&units=metric"
+       return "https://api.openweathermap.org/data/2.5/weather?id=\(cityId)&appid=\(apiKey)&units=metric&lang=es"
    }
     
-    private func getURL(lat: Int, lon: Int, apiKey: String) -> String {
-        return "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=metric"
+    private func getURL(lat: Double, lon: Double, apiKey: String) -> String {
+        return "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=metric&lang=es"
     }
     func prepareRequest() {
         let urlR = URL(string: stringURL!)!
@@ -60,6 +60,7 @@ class WeatherRequest {
             }
             do {
                 let jsonObj = try JSONSerialization.jsonObject(with: data, options: [])
+                print(jsonObj)
                 self.RequestAnswerDelegate.onResult(data: jsonObj as! NSDictionary, canDismiss: self.canDismiss, isNew: self.storeValue, id: self.objectId, index: self.i)
             } catch {
                 self.RequestAnswerDelegate.onError(msg: "Error al serializar JSON")

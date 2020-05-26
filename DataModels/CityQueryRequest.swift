@@ -35,7 +35,7 @@ class CityQueryRequest {
         request.resume()
     }
     private func getURL(query: String) -> String {
-        return "http://api.geonames.org/searchJSON?maxRows=5&username=hectorlbr956&q=\(encodeString(query: query))"
+        return "http://api.geonames.org/searchJSON?maxRows=7&isNameRequired=true&style=FULL&username=hectorlbr956&q=\(encodeString(query: query))"
     }
     private func encodeString(query: String) -> String {
         return query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!

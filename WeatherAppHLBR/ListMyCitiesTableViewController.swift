@@ -9,9 +9,6 @@
 import UIKit
 import CoreData
 
-protocol dataUpdateDelegate {
-    func passed(data: [WeatherResponse])
-}
 
 class ListMyCitiesTableViewController: UITableViewController {
     override func viewDidLoad() {
@@ -27,8 +24,14 @@ class ListMyCitiesTableViewController: UITableViewController {
     @objc private func updateTable(_ notification: Notification){
         tableView.reloadData()
      }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let index = indexPath.row
+        NotificationCenter.default.post(name: Notification.Name(rawValue: selectNotificationKey),object: nil, userInfo: ["index": index])
+        dismiss(animated: true, completion: nil)
+    }
+
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if !GlobalData.CitiesWeather[indexPath.row].isDismissible {
+        if !GlobalData.CitiesWeather[indexPath.row]!.isDismissible {
             return false
         }
         return true
@@ -36,7 +39,8 @@ class ListMyCitiesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             let name = Notification.Name(rawValue: deleteNotificationKey)
-            let info = ["objectId": GlobalData.CitiesWeather[indexPath.row].id!]
+            let id = GlobalData.CitiesWeather[indexPath.row]!.id
+            let info = ["objectId": id!]
             NotificationCenter.default.post(name: name, object: nil, userInfo: info)
             GlobalData.CitiesWeather.remove(at: indexPath.row)
             tableView.reloadData()
@@ -53,9 +57,9 @@ class ListMyCitiesTableViewController: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CitiesCell", for: indexPath) as! CitiesCell
-        cell.cityName.text = GlobalData.CitiesWeather[indexPath.row].cityName
-        cell.current.text = "\(GlobalData.CitiesWeather[indexPath.row].current) ºC"
-        cell.resume.text = GlobalData.CitiesWeather[indexPath.row].resume
+        cell.cityName.text = GlobalData.CitiesWeather[indexPath.row]!.cityName
+        cell.current.text = "\(GlobalData.CitiesWeather[indexPath.row]!.current) ºC"
+        cell.resume.text = GlobalData.CitiesWeather[indexPath.row]!.resume
         return cell
     }
     @objc func lookForCity () {
